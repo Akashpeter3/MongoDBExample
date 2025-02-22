@@ -5,9 +5,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Document(collation = "student")
+@Document(collection = "student")
 public class Student {
 
     @Id
@@ -17,9 +18,11 @@ public class Student {
     @Field(name = "email")
     private  String email;
     @Field(name = "departments")
-    private Department department;
+    private List<Department> department;
     @Field(name = "subjects")
     private List<Subject>subjects;
+    @Field(name = "age")
+    private int age;
 
 //    @PersistenceCreator
 //    public Sony(String id, String name, String email, Department department, List<Subject> subjects) {
@@ -36,6 +39,7 @@ public class Student {
 //        this.department = department;
 //        this.subjects = subjects;
 //    }
+
 
     public String getId() {
         return id;
@@ -61,11 +65,11 @@ public class Student {
         this.email = email;
     }
 
-    public Department getDepartment() {
+    public List<Department> getDepartment() {
         return department;
     }
 
-    public void setDepartment(Department department) {
+    public void setDepartment(List<Department> department) {
         this.department = department;
     }
 
@@ -75,5 +79,13 @@ public class Student {
 
     public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

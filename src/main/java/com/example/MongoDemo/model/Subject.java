@@ -10,6 +10,11 @@ public class Subject {
     @Field(name = "Mark")
     private  int mark;
 
+    public Subject(String program, int mark) {
+        this.program = program;
+        this.mark = mark;
+    }
+
     public String getProgram() {
         return program;
     }
