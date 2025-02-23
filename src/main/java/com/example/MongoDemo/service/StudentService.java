@@ -4,6 +4,9 @@ import com.example.MongoDemo.model.Student;
 import com.example.MongoDemo.model.Subject;
 import com.example.MongoDemo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -57,5 +60,36 @@ public class StudentService {
     public String deleteAll() {
         studentRepository.deleteAll();
         return "All students deleted";
+    }
+
+    public List<Student> getStudentByName(String name) {
+      return studentRepository.findByName(name);
+    }
+
+    public List<Student> fndStudentByNameAndEmail(String name, String email) {
+        return  studentRepository.findByNameAndEmail(name,email);
+    }
+
+    public List<Student> fndStudentByNameOrEmail(String name, String email) {
+        return  studentRepository.findByNameOrEmail(name,email);
+    }
+
+    public List<Student> getAllStudentsWithPagination(int pageNo, int pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNo-1,pageSize);//(page-1)*pageSize
+        return  studentRepository.findAll(pageable).getContent();
+    }
+
+    public List<Student> allWithSorting() {
+        Sort sort = Sort.by(Sort.Direction.ASC,"name","email");
+        return  studentRepository.findAll(sort);
+    }
+
+    public List<Student> byDepartmentName(String depName) {
+        return  studentRepository.findByDepartmentDepartmentName(depName);
+    }
+
+    public List<Student> byProgram(String program) {
+        return studentRepository.findBySubjectsProgram(program);
     }
 }

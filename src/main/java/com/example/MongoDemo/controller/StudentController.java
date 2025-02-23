@@ -49,4 +49,41 @@ public class StudentController {
         return studentService.deleteAll();
     }
 
+    @GetMapping("/getName/{name}")
+    public List<Student>getStudentByName(@PathVariable("name") String name){
+        return  studentService.getStudentByName(name);
+    }
+
+    @GetMapping("/studentByNameAndEmail")
+    public List<Student>fndStudentByNameAndEmail(@RequestParam String name , @RequestParam String email){
+        return  studentService.fndStudentByNameAndEmail(name,email);
+    }
+
+    @GetMapping("/studentByNameOrEmail")
+    public List<Student>fndStudentByNameOrEmail(@RequestParam String name , @RequestParam String email){
+        return  studentService.fndStudentByNameOrEmail(name,email);
+    }
+
+
+    @GetMapping("/getAllStudentWithpagination")
+    public List<Student>getAllStudentsWithPagination(@RequestParam int pageNo,@RequestParam int pageSize){
+        return  studentService.getAllStudentsWithPagination(pageNo,pageSize);
+
+    }
+
+    @GetMapping("/allWithSorting")
+    public List<Student>allWithSorting(){
+        return  studentService.allWithSorting();
+    }
+
+    @GetMapping("/byDepartmentName")
+  public  List<Student>byDepartmentName(@RequestParam String depName){
+        return studentService.byDepartmentName(depName);
+    }
+
+    @GetMapping("/byProgram")
+    public  List<Student>byProgram(@RequestParam String program){
+        return studentService.byProgram(program);
+    }
+
 }

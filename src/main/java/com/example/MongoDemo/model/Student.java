@@ -18,7 +18,7 @@ public class Student {
     @Field(name = "email")
     private  String email;
     @Field(name = "departments")
-    private List<Department> department;
+    private Department department;
     @Field(name = "subjects")
     private List<Subject>subjects;
     @Field(name = "age")
@@ -65,11 +65,11 @@ public class Student {
         this.email = email;
     }
 
-    public List<Department> getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    public void setDepartment(List<Department> department) {
+    public void setDepartment(Department department) {
         this.department = department;
     }
 
