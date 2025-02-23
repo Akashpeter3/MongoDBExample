@@ -1,12 +1,13 @@
 package com.example.MongoDemo.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Document(collection = "student")
 public class Student {
@@ -23,6 +24,9 @@ public class Student {
     private List<Subject>subjects;
     @Field(name = "age")
     private int age;
+
+    @Transient
+    private  double percentage;
 
 //    @PersistenceCreator
 //    public Sony(String id, String name, String email, Department department, List<Subject> subjects) {
@@ -87,5 +91,22 @@ public class Student {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public double getPercentage() {
+        if (subjects!=null&&subjects.size()>0){
+            AtomicInteger total = new AtomicInteger();
+            subjects.forEach(subject -> {
+
+                total.addAndGet(subject.getMark());
+            });
+            return  (double) Integer.parseInt(String.valueOf(total)) /subjects.size();
+        }else {
+            return 0.00;
+        }
+    }
+
+    public void setPercentage(double percentage) {
+        this.percentage = percentage;
     }
 }

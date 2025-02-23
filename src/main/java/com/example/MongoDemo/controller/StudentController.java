@@ -86,4 +86,14 @@ public class StudentController {
         return studentService.byProgram(program);
     }
 
+    @GetMapping("/emailLike")
+    public  List<Student>emailLike(@RequestParam String email){
+        return studentService.emailLike(email);
+    }
+
+    @GetMapping("/nameStartsWith")
+    public  List<Student>nameStartsWith(@RequestParam String name){
+        return studentService.nameStartsWith(name);
+    }
+
 }

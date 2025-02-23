@@ -92,4 +92,12 @@ public class StudentService {
     public List<Student> byProgram(String program) {
         return studentRepository.findBySubjectsProgram(program);
     }
+
+    public List<Student> emailLike(String email) {
+        return  studentRepository.findByEmailIsLike(email);
+    }
+
+    public List<Student> nameStartsWith(String name) {
+        return  studentRepository.findByNameStartsWith(name);
+    }
 }
