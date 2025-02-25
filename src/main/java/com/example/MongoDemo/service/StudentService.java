@@ -2,7 +2,9 @@ package com.example.MongoDemo.service;
 
 import com.example.MongoDemo.model.Student;
 import com.example.MongoDemo.model.Subject;
+import com.example.MongoDemo.repository.DepartmentRepository;
 import com.example.MongoDemo.repository.StudentRepository;
+import com.example.MongoDemo.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,11 +18,28 @@ import java.util.List;
 
 @Service
 public class StudentService {
-    @Autowired
+
     private StudentRepository studentRepository;
+    private DepartmentRepository departmentRepository;
+    private SubjectRepository subjectRepository;
+
+    public StudentService(StudentRepository studentRepository,DepartmentRepository departmentRepository,SubjectRepository subjectRepository){
+        this.studentRepository =studentRepository;
+        this.departmentRepository =departmentRepository;
+        this.subjectRepository =subjectRepository;
+    }
 
     public ResponseEntity<Student> createStudent(Student student) {
+
+        if (student.getDepartment()!=null){
+            departmentRepository.save(student.getDepartment());
+        }
+        if (student.getSubjects()!=null&&student.getSubjects().size()>0){
+           // subjectRepository.saveAll(student.getSubjects());
+            student.getSubjects().forEach(subject -> subjectRepository.save(subject));
+        }
      Student response = studentRepository.save(student);
+
      return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -63,7 +82,7 @@ public class StudentService {
     }
 
     public List<Student> getStudentByName(String name) {
-      return studentRepository.findByName(name);
+      return studentRepository.getByName(name);
     }
 
     public List<Student> fndStudentByNameAndEmail(String name, String email) {
@@ -99,5 +118,9 @@ public class StudentService {
 
     public List<Student> nameStartsWith(String name) {
         return  studentRepository.findByNameStartsWith(name);
+    }
+
+    public List<Student> byDepartmentId(String depId) {
+        return  studentRepository.findByDepartmentId(depId);
     }
 }

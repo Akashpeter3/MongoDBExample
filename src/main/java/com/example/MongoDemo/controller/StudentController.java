@@ -2,6 +2,7 @@ package com.example.MongoDemo.controller;
 
 
 import com.example.MongoDemo.model.Student;
+import com.example.MongoDemo.repository.DepartmentRepository;
 import com.example.MongoDemo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ public class StudentController {
 
     @PostMapping("/create")
     ResponseEntity<Student> createStudent(@RequestBody Student student){
+
         return studentService.createStudent(student);
     }
 
@@ -29,6 +31,7 @@ public class StudentController {
 
     @GetMapping("/getAllStudents")
     public List<Student> getAllStudents(){
+        System.out.println("inside getAllStudents");
         return studentService.getAllStudents();
     }
 
@@ -94,6 +97,11 @@ public class StudentController {
     @GetMapping("/nameStartsWith")
     public  List<Student>nameStartsWith(@RequestParam String name){
         return studentService.nameStartsWith(name);
+    }
+
+    @GetMapping("/byDepartmentId")
+    public  List<Student>byDepartmentId(@RequestParam String depId){
+        return studentService.byDepartmentId(depId);
     }
 
 }
